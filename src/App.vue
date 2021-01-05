@@ -1,32 +1,40 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <TopNav />
+    <v-main>
+      <router-view></router-view>
+    </v-main>
+    <v-snackbar
+      v-model="$store.getters['cart/snackbar'].show"
+      :multi-line="true"
+      :right="true"
+      :top="true"
+      :timeout="6000"
+      :color="$store.getters['cart/snackbar'].variant"
+    >
+      {{ $store.getters['cart/snackbar'].message }}
+      <v-btn dark text @click="$store.commit('cart/updateSnackbar', { show: false })"
+        >Close</v-btn
+      >
+    </v-snackbar>
+    <!-- <Grid /> -->
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import TopNav from "./components/TopNav";
+// import Grid from "./components/Grid";
 
-#nav {
-  padding: 30px;
+export default {
+  name: "App",
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  components: {
+    TopNav
+    // Grid
+  },
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+  data: () => ({
+    //
+  })
+};
+</script>
